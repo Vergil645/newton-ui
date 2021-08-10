@@ -4,7 +4,7 @@ export default class History extends React.Component {
   render() {
     return (
       <fieldset>
-        <legend>History of operations</legend>
+        <h2>History of operations</h2>
         {this.props.history}
       </fieldset>
     );
