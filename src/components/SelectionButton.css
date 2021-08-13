@@ -1,0 +1,25 @@
+.selection-button {
+  color: #3a42e7;
+  cursor: pointer;
+
+  text-align: center;
+  font-size: 20px;
+
+  border: 3px solid white;
+  border-radius: 10px;
+  padding: 4px;
+  margin: 1px;
+
+  transition-duration: 100ms;
+  transition-property: background, border, color;
+}
+
+.selection-button:hover {
+  border-color: #3a42e7;
+}
+
+.selection-button.active {
+  border-color: #3a42e7;
+  background: #3a42e7;
+  color: white;
+}

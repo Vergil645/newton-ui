@@ -5,6 +5,10 @@ import {Expression, Limits} from "./fields";
 export default class Area extends React.Component {
   static usingFields = ['expression', 'from', 'to'];
 
+  static createRequest(fields) {
+    return encodeURIComponent(`${fields.from}:${fields.to}|${fields.expression}`);
+  }
+
   render() {
     return (
       <div>

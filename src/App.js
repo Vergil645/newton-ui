@@ -1,10 +1,12 @@
 import React from 'react';
 
-import {config, operations} from "./config";
+import {config, operations} from "./components/operations/config";
 
-import Header from "./Header";
-import History from "./History";
-import SelectionButton from "./SelectionButton";
+import Header from "./components/header/Header";
+import History from "./components/History";
+import SelectionButton from "./components/SelectionButton";
+import {CenterDiv, CenterText} from "./components/tmp/center";
+import Line from "./components/tmp/Line";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -12,7 +14,7 @@ export default class App extends React.Component {
     this.counter = 0;
     let fields = {};
     operations.forEach((operation) => {
-      config[operation].component.usingFields.forEach((field) => {
+      config[operation].usingFields.forEach((field) => {
         if (!(field in fields)) {
           fields[field] = '';
         }
@@ -63,20 +65,26 @@ export default class App extends React.Component {
     return (
       <div>
         <Header/>
+        <Line/>
 
-        <fieldset>
+        <CenterDiv>
+          <CenterText style={{fontSize: "20px"}}>
+            <b>Choose operation:</b>
+          </CenterText>
           {operations.map((operation, index) => (
             <SelectionButton
               key={index}
               name={operation}
+              active={operation === this.state.curOperation}
               onClick={() => this.setState({curOperation: operation})}
             />
           ))}
-        </fieldset>
+        </CenterDiv>
+        <Line/>
 
-        <fieldset>
+        <div>
           {React.createElement(
-            config[this.state.curOperation].component,
+            config[this.state.curOperation],
             {fields: this.state.fields, getOnChange: this.getOnChange}
           )}
           <div>
@@ -84,7 +92,7 @@ export default class App extends React.Component {
               Submit
             </button>
           </div>
-        </fieldset>
+        </div>
 
         <History history={this.state.history}/>
       </div>

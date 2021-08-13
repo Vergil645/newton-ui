@@ -1,0 +1,27 @@
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: fantasy;
+  font-size: 40px;
+
+  box-shadow: 0 0 30px rgba(58, 66, 231, 0.7);
+  box-sizing: border-box;
+  width: 100%;
+  height: 72px;
+
+  margin-bottom: 30px;
+
+  background-image: url("title.png");
+  background-position: center center;
+}
+
+.ui {
+  color: #3a42e7;
+  margin-left: 20px;
+}
+
+/*.description {*/
+/*  font-size: 17px;*/
+/*}*/
