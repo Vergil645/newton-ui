@@ -1,18 +1,19 @@
 import React from 'react';
 
-import {config, operations} from "./components/operations/config";
+import {config, operations, api, trigonometry} from "./config";
 
 import Header from "./components/header/Header";
 import History from "./components/History";
 import SelectionButton from "./components/SelectionButton";
 import {CenterDiv, CenterText} from "./components/tmp/center";
 import Line from "./components/tmp/Line";
+import SubmitButton from "./components/SubmitButton";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.counter = 0;
-    let fields = {};
+    let fields = {trigValue: ''};
     operations.forEach((operation) => {
       config[operation].usingFields.forEach((field) => {
         if (!(field in fields)) {
@@ -23,6 +24,8 @@ export default class App extends React.Component {
     this.state = {
       fields,
       curOperation: operations[0],
+      curTrigonometry: trigonometry[0],
+      waiting: false,
       history: [],
     };
     this.getOnChange = this.getOnChange.bind(this);
@@ -39,14 +42,18 @@ export default class App extends React.Component {
 
   getOnSubmit(operation) {
     return async () => {
-      let base = 'https://newton.now.sh/api/v2';
+      this.setState({waiting: true});
+
       let request = config[operation].createRequest(this.state.fields);
 
-      let result = await fetch(`${base}/${operation}/${request}`)
+      let result = await fetch(`${api}/${operation}/${request}`)
         .then(response => response.json());
 
       this.setState((state) => {
-        return {history: Array.of(this.makeRecord(result), ...state.history)};
+        return {
+          waiting: false,
+          history: Array.of(this.makeRecord(result), ...state.history)
+        };
       });
     }
   }
@@ -63,12 +70,12 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{cursor: (this.state.waiting ? "wait" : "default")}}>
         <Header/>
         <Line/>
 
-        <CenterDiv>
-          <CenterText style={{fontSize: "20px"}}>
+        <CenterDiv style={{fontSize: "20px"}}>
+          <CenterText>
             <b>Choose operation:</b>
           </CenterText>
           {operations.map((operation, index) => (
@@ -82,17 +89,52 @@ export default class App extends React.Component {
         </CenterDiv>
         <Line/>
 
-        <div>
+        <CenterDiv>
           {React.createElement(
             config[this.state.curOperation],
             {fields: this.state.fields, getOnChange: this.getOnChange}
           )}
-          <div>
-            <button onClick={this.getOnSubmit(this.state.curOperation)}>
-              Submit
-            </button>
-          </div>
-        </div>
+        </CenterDiv>
+        <CenterDiv>
+          <SubmitButton
+            waiting={this.state.waiting}
+            onClick={this.getOnSubmit(this.state.curOperation)}
+          />
+        </CenterDiv>
+        <Line/>
+
+        <CenterDiv style={{fontSize: "20px"}}>
+          <CenterText>
+            <b>Trigonometry:</b>
+          </CenterText>
+          {trigonometry.map((operation, index) => (
+            <SelectionButton
+              key={index}
+              name={operation}
+              active={operation === this.state.curTrigonometry}
+              onClick={() => this.setState({curTrigonometry: operation})}
+            />
+          ))}
+        </CenterDiv>
+        <Line/>
+
+        <CenterDiv>
+          {React.createElement(
+            config[this.state.curTrigonometry],
+            {
+              name: this.state.curTrigonometry,
+              fields: this.state.fields,
+              getOnChange: this.getOnChange
+            }
+          )}
+        </CenterDiv>
+        <CenterDiv>
+          <SubmitButton
+            waiting={this.state.waiting}
+            onClick={this.getOnSubmit(this.state.curTrigonometry)}
+          />
+        </CenterDiv>
+        <Line/>
 
         <History history={this.state.history}/>
       </div>

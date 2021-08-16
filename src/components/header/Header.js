@@ -19,8 +19,8 @@ export default class Header extends React.Component {
     return (
       <div>
         <div className="title">
-          <span>NEWTON</span>
-          <span className="ui">UI</span>
+          <span>NEWTON</span>&#160;
+          <span style={{color: "#3a42e7"}}>UI</span>
           <a href="https://www.freepik.com" style={{display: "none"}}>
             Designed by starline / Freepik
           </a>

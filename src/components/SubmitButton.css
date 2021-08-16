@@ -1,24 +1,19 @@
-.selection-button {
+.submit-button {
   color: #3a42e7;
   cursor: pointer;
 
   text-align: center;
 
-  border: 3px solid white;
+  border: 3px solid #3a42e7;
   border-radius: 10px;
-  padding: 4px;
+  padding: 5px;
   margin: 1px;
 
   transition-duration: 100ms;
   transition-property: background, border, color;
 }
 
-.selection-button:hover {
-  border-color: #3a42e7;
-}
-
-.selection-button.active {
-  border-color: #3a42e7;
+.submit-button:hover {
   background: #3a42e7;
   color: white;
 }
