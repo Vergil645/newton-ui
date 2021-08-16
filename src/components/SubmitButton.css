@@ -9,6 +9,8 @@
   padding: 5px;
   margin: 1px;
 
+  background: white;
+
   transition-duration: 100ms;
   transition-property: background, border, color;
 }
