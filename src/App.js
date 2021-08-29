@@ -52,10 +52,8 @@ export default class App extends React.Component {
       const fields = this.state.fields;
       this.setState({waiting: true});
 
-      let request = '';
-      try {
-        request = components[operation].createRequest(fields);
-      } catch (_) {
+      let request = components[operation].createRequest(fields);
+      if (request === '') {
         alert('Incorrect fields values');
         this.setState({waiting: false});
         return;

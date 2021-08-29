@@ -6,9 +6,6 @@ export default class Trigonometry extends React.Component {
   static usingFields = ['trigValue'];
 
   static createRequest(fields) {
-    if (fields.trigValue === '') {
-      throw new Error();
-    }
     return encodeURIComponent(fields.trigValue);
   }
 
