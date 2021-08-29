@@ -1,7 +1,7 @@
 import React from 'react';
 import './Header.css';
 
-import {CenterDiv} from "../tmp/center";
+import {CenterDiv, CenterText} from "../tmp/center";
 
 import githubLogoSVG from './github-logo.svg';
 const githubLogo = (
@@ -27,18 +27,15 @@ export default class Header extends React.Component {
         </div>
 
         <div className="description">
-          <CenterDiv><strong>Hello friends!</strong></CenterDiv>
-          <CenterDiv>
+          <CenterText><strong>Hello friends!</strong></CenterText>
+          <CenterText>
             I wanted to make my first interface on React.js, so I chose
             Newton API &#8211;&#160;<i>a really micro micro-service for advanced math</i>.
-          </CenterDiv>
-          <CenterDiv>API has some bugs&#8230; but for me, it's not important.</CenterDiv>
-          <CenterDiv>If you find my site on Internet, please, give me feedback.</CenterDiv>
+          </CenterText>
+          <CenterText>API has some bugs&#8230; but for me, it's not important.</CenterText>
+          <CenterText>If you find my site on Internet, please, give me feedback.</CenterText>
           <CenterDiv>
-            <a
-              href={'https://github.com/Vergil645/newton-ui'}
-              style={{marginRight: "20px"}}
-            >
+            <a href={'https://github.com/Vergil645/newton-ui'}>
               <CenterDiv>{githubLogo}My Github</CenterDiv>
             </a>
             <a href={'https://github.com/aunyks/newton-api'}>
