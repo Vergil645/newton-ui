@@ -1,11 +1,13 @@
 import React from 'react';
 
+import Input from "../tmp/Input";
+
 export class Expression extends React.Component {
   render() {
     return (
       <div>
-        Expression:{' '}
-        <input
+        Expression:
+        <Input
           value={this.props.value}
           onChange={this.props.onChange}
         />
@@ -18,8 +20,8 @@ export class Point extends React.Component {
   render() {
     return (
       <div>
-        Point:{' '}
-        <input
+        Point:
+        <Input
           value={this.props.value}
           onChange={this.props.onChange}
         />
@@ -32,13 +34,13 @@ export class Limits extends React.Component {
   render() {
     return (
       <div>
-        Limits: from{' '}
-        <input
+        Limits: from
+        <Input
           value={this.props.fromValue}
           onChange={this.props.onFromChange}
         />
-        {' '}to{' '}
-        <input
+        to
+        <Input
           value={this.props.toValue}
           onChange={this.props.onToChange}
         />

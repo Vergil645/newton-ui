@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const Line = styled.div`
-  height: 2px;
-  background-color: darkgrey;
+  height: 1px;
+  background-color: black;
   margin: 20px;
 `;
 

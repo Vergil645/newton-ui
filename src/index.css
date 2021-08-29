@@ -4,5 +4,5 @@ body {
   font-size: 18px;
 
   background-image: url("./cell.svg");
-  background-position: center center;
+  /*background-position: center center;*/
 }

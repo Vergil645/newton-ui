@@ -9,6 +9,17 @@ export default class Tangent extends React.Component {
     return encodeURIComponent(`${fields.point}|${fields.expression}`);
   }
 
+  static makeRecord(fields, resObj) {
+    return (
+      <div>
+        <div>Operation: {resObj.operation}</div>
+        <div>Expression: {fields.expression}</div>
+        <div>Point: {fields.point}</div>
+        <div>Result: {resObj.result}</div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div>

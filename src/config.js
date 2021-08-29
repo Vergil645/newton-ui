@@ -5,7 +5,7 @@ import Trigonometry from "./components/operations/Trigonometry";
 
 export const api = 'https://newton.now.sh/api/v2';
 
-export const config = {
+export const components = {
   simplify: SimpleOperation,
   derive: SimpleOperation,
   factor: SimpleOperation,

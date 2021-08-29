@@ -1,13 +1,21 @@
 import React from 'react';
+import styled from "styled-components";
 
-import {config, operations, api, trigonometry} from "./config";
+import {components, operations, api, trigonometry} from "./config";
 
 import Header from "./components/header/Header";
-import History from "./components/History";
 import SelectionButton from "./components/SelectionButton";
-import {CenterDiv, CenterText} from "./components/tmp/center";
+import {CenterDiv} from "./components/tmp/center";
 import Line from "./components/tmp/Line";
 import SubmitButton from "./components/SubmitButton";
+
+const Waiting = styled.div`
+  position: fixed;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  cursor: wait;
+`;
 
 export default class App extends React.Component {
   constructor(props) {
@@ -15,7 +23,7 @@ export default class App extends React.Component {
     this.counter = 0;
     let fields = {trigValue: ''};
     operations.forEach((operation) => {
-      config[operation].usingFields.forEach((field) => {
+      components[operation].usingFields.forEach((field) => {
         if (!(field in fields)) {
           fields[field] = '';
         }
@@ -29,7 +37,6 @@ export default class App extends React.Component {
       history: [],
     };
     this.getOnChange = this.getOnChange.bind(this);
-    this.getOnSubmit = this.getOnSubmit.bind(this);
   }
 
   getOnChange(field) {
@@ -42,42 +49,39 @@ export default class App extends React.Component {
 
   getOnSubmit(operation) {
     return async () => {
+      const fields = this.state.fields;
       this.setState({waiting: true});
 
-      let request = config[operation].createRequest(this.state.fields);
+      let request = components[operation].createRequest(fields);
 
-      let result = await fetch(`${api}/${operation}/${request}`)
+      let resObj = await fetch(`${api}/${operation}/${request}`)
         .then(response => response.json());
 
       this.setState((state) => {
         return {
           waiting: false,
-          history: Array.of(this.makeRecord(result), ...state.history)
+          history: Array.of(
+            (
+              <div style={{marginBottom: "10px"}}>
+                {components[operation].makeRecord(fields, resObj)}
+              </div>
+            ),
+            ...state.history
+          )
         };
       });
     }
   }
 
-  makeRecord(resObj) {
-    return (
-      <fieldset>
-        <div>Operation: {resObj.operation}</div>
-        <div>Expression: {resObj.expression}</div>
-        <div>Result: {resObj.result}</div>
-      </fieldset>
-    );
-  }
-
   render() {
     return (
-      <div style={{cursor: (this.state.waiting ? "wait" : "default")}}>
+      <div>
+        {this.state.waiting ? <Waiting/> : null}
         <Header/>
         <Line/>
 
         <CenterDiv style={{fontSize: "20px"}}>
-          <CenterText>
-            <b>Choose operation:</b>
-          </CenterText>
+          <b style={{margin: "0 7px"}}>Choose operation:</b>
           {operations.map((operation, index) => (
             <SelectionButton
               key={index}
@@ -91,7 +95,7 @@ export default class App extends React.Component {
 
         <CenterDiv>
           {React.createElement(
-            config[this.state.curOperation],
+            components[this.state.curOperation],
             {fields: this.state.fields, getOnChange: this.getOnChange}
           )}
         </CenterDiv>
@@ -104,9 +108,7 @@ export default class App extends React.Component {
         <Line/>
 
         <CenterDiv style={{fontSize: "20px"}}>
-          <CenterText>
-            <b>Trigonometry:</b>
-          </CenterText>
+          <b style={{margin: "0 7px"}}>Trigonometry:</b>
           {trigonometry.map((operation, index) => (
             <SelectionButton
               key={index}
@@ -120,7 +122,7 @@ export default class App extends React.Component {
 
         <CenterDiv>
           {React.createElement(
-            config[this.state.curTrigonometry],
+            components[this.state.curTrigonometry],
             {
               name: this.state.curTrigonometry,
               fields: this.state.fields,
@@ -131,12 +133,17 @@ export default class App extends React.Component {
         <CenterDiv>
           <SubmitButton
             waiting={this.state.waiting}
-            onClick={this.getOnSubmit(this.state.curTrigonometry)}
+            onClick={this.getOnSubmit(this.state.curOperation)}
           />
         </CenterDiv>
         <Line/>
 
-        <History history={this.state.history}/>
+        <CenterDiv>
+          <b style={{fontSize: "20px"}}>History of operations</b>
+        </CenterDiv>
+        <div style={{margin: "20px"}}>
+          {this.state.history}
+        </div>
       </div>
     );
   }
