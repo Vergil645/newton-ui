@@ -6,6 +6,9 @@ export default class Area extends React.Component {
   static usingFields = ['expression', 'from', 'to'];
 
   static createRequest(fields) {
+    if (fields.expression === '') {
+      throw new Error();
+    }
     return encodeURIComponent(`${fields.from}:${fields.to}|${fields.expression}`);
   }
 

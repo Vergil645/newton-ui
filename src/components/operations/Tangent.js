@@ -6,6 +6,9 @@ export default class Tangent extends React.Component {
   static usingFields = ['expression', 'point'];
 
   static createRequest(fields) {
+    if (fields.expression === '') {
+      throw new Error();
+    }
     return encodeURIComponent(`${fields.point}|${fields.expression}`);
   }
 

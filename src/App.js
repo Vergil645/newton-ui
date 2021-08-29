@@ -52,7 +52,14 @@ export default class App extends React.Component {
       const fields = this.state.fields;
       this.setState({waiting: true});
 
-      let request = components[operation].createRequest(fields);
+      let request = '';
+      try {
+        request = components[operation].createRequest(fields);
+      } catch (_) {
+        alert('Incorrect fields values');
+        this.setState({waiting: false});
+        return;
+      }
 
       let resObj = await fetch(`${api}/${operation}/${request}`)
         .then(response => response.json());

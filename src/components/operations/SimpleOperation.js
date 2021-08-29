@@ -6,6 +6,9 @@ export default class SimpleOperation extends React.Component {
   static usingFields = ['expression'];
 
   static createRequest(fields) {
+    if (fields.expression === '') {
+      throw new Error();
+    }
     return encodeURIComponent(fields.expression);
   }
 
