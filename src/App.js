@@ -133,7 +133,7 @@ export default class App extends React.Component {
         <CenterDiv>
           <SubmitButton
             waiting={this.state.waiting}
-            onClick={this.getOnSubmit(this.state.curOperation)}
+            onClick={this.getOnSubmit(this.state.curTrigonometry)}
           />
         </CenterDiv>
         <Line/>
