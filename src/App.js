@@ -67,7 +67,7 @@ export default class App extends React.Component {
           waiting: false,
           history: Array.of(
             (
-              <div style={{marginBottom: "10px"}}>
+              <div style={{marginBottom: "20px"}}>
                 {components[operation].makeRecord(fields, resObj)}
               </div>
             ),
@@ -105,10 +105,7 @@ export default class App extends React.Component {
           )}
         </CenterDiv>
         <CenterDiv>
-          <SubmitButton
-            waiting={this.state.waiting}
-            onClick={this.getOnSubmit(this.state.curOperation)}
-          />
+          <SubmitButton onClick={this.getOnSubmit(this.state.curOperation)}/>
         </CenterDiv>
         <Line/>
 
@@ -136,10 +133,7 @@ export default class App extends React.Component {
           )}
         </CenterDiv>
         <CenterDiv>
-          <SubmitButton
-            waiting={this.state.waiting}
-            onClick={this.getOnSubmit(this.state.curTrigonometry)}
-          />
+          <SubmitButton onClick={this.getOnSubmit(this.state.curTrigonometry)}/>
         </CenterDiv>
         <Line/>
 

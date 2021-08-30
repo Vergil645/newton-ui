@@ -9,7 +9,7 @@ export class Expression extends React.Component {
         Expression:
         <Input
           value={this.props.value}
-          placeholder={'x^3 + 12x'}
+          placeholder={'x^3 + 12x + 7'}
           onChange={this.props.onChange}
         />
       </div>

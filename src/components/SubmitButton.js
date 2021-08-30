@@ -7,7 +7,6 @@ export default class SubmitButton extends React.Component {
       <div
         className={'submit-button'}
         onClick={this.props.onClick}
-        style={{cursor: (this.props.waiting ? "wait" : "default")}}
       >
         Submit
       </div>
