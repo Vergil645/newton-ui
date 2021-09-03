@@ -3,11 +3,11 @@ import styled from "styled-components";
 
 import {components, operations, api, trigonometry} from "./config";
 
-import Header from "./components/header/Header";
+import Description from "./components/description/Description";
 import SelectionButton from "./components/SelectionButton";
 import {CenterDiv} from "./components/tmp/center";
-import Line from "./components/tmp/Line";
 import SubmitButton from "./components/SubmitButton";
+import Title from "./components/title/Title";
 
 const Waiting = styled.div`
   position: fixed;
@@ -15,6 +15,24 @@ const Waiting = styled.div`
   width: 100%;
   height: 100%;
   cursor: wait;
+`;
+
+const Wrap = styled.div`
+  margin: 0 30px 30px;
+  border: 2px solid darkgrey;
+  border-radius: 10px;
+  padding: 5px 0;
+  
+  box-sizing: content-box;
+  width: auto;
+  
+  background: white;
+`;
+
+const Line = styled.div`
+  height: 2px;
+  margin: 10px 0;
+  background-color: darkgrey;
 `;
 
 export default class App extends React.Component {
@@ -82,67 +100,74 @@ export default class App extends React.Component {
     return (
       <div>
         {this.state.waiting ? <Waiting/> : null}
-        <Header/>
-        <Line/>
+        <Title/>
 
-        <CenterDiv style={{fontSize: "20px"}}>
-          <b style={{margin: "0 7px"}}>Choose operation:</b>
-          {operations.map((operation, index) => (
-            <SelectionButton
-              key={index}
-              name={operation}
-              active={operation === this.state.curOperation}
-              onClick={() => this.setState({curOperation: operation})}
-            />
-          ))}
-        </CenterDiv>
-        <Line/>
+        <Wrap>
 
-        <CenterDiv>
-          {React.createElement(
-            components[this.state.curOperation],
-            {fields: this.state.fields, getOnChange: this.getOnChange}
-          )}
-        </CenterDiv>
-        <CenterDiv>
-          <SubmitButton onClick={this.getOnSubmit(this.state.curOperation)}/>
-        </CenterDiv>
-        <Line/>
+          <Description/>
+          <Line/>
 
-        <CenterDiv style={{fontSize: "20px"}}>
-          <b style={{margin: "0 7px"}}>Trigonometry:</b>
-          {trigonometry.map((operation, index) => (
-            <SelectionButton
-              key={index}
-              name={operation}
-              active={operation === this.state.curTrigonometry}
-              onClick={() => this.setState({curTrigonometry: operation})}
-            />
-          ))}
-        </CenterDiv>
-        <Line/>
+          <CenterDiv style={{fontSize: "20px"}}>
+            <b style={{margin: "0 7px"}}>Choose operation:</b>
+            {operations.map((operation, index) => (
+              <SelectionButton
+                key={index}
+                name={operation}
+                active={operation === this.state.curOperation}
+                onClick={() => this.setState({curOperation: operation})}
+              />
+            ))}
+          </CenterDiv>
+          <Line/>
 
-        <CenterDiv>
-          {React.createElement(
-            components[this.state.curTrigonometry],
-            {
-              name: this.state.curTrigonometry,
-              fields: this.state.fields,
-              getOnChange: this.getOnChange
-            }
-          )}
-        </CenterDiv>
-        <CenterDiv>
-          <SubmitButton onClick={this.getOnSubmit(this.state.curTrigonometry)}/>
-        </CenterDiv>
-        <Line/>
+          <CenterDiv>
+            {React.createElement(
+              components[this.state.curOperation],
+              {fields: this.state.fields, getOnChange: this.getOnChange}
+            )}
+          </CenterDiv>
+          <CenterDiv>
+            <SubmitButton onClick={this.getOnSubmit(this.state.curOperation)}/>
+          </CenterDiv>
+          <Line/>
 
-        <CenterDiv>
-          <b style={{fontSize: "20px"}}>History of operations</b>
-        </CenterDiv>
-        <div style={{margin: "20px"}}>
-          {this.state.history}
-        </div>
+          <CenterDiv style={{fontSize: "20px"}}>
+            <b style={{margin: "0 7px"}}>Trigonometry:</b>
+            {trigonometry.map((operation, index) => (
+              <SelectionButton
+                key={index}
+                name={operation}
+                active={operation === this.state.curTrigonometry}
+                onClick={() => this.setState({curTrigonometry: operation})}
+              />
+            ))}
+          </CenterDiv>
+          <Line/>
+
+          <CenterDiv>
+            {React.createElement(
+              components[this.state.curTrigonometry],
+              {
+                name: this.state.curTrigonometry,
+                fields: this.state.fields,
+                getOnChange: this.getOnChange
+              }
+            )}
+          </CenterDiv>
+          <CenterDiv>
+            <SubmitButton onClick={this.getOnSubmit(this.state.curTrigonometry)}/>
+          </CenterDiv>
+          <Line/>
+
+          <CenterDiv>
+            <b style={{fontSize: "20px"}}>History of operations</b>
+          </CenterDiv>
+          <div style={{margin: "20px"}}>
+            {this.state.history}
+          </div>
+
+        </Wrap>
+
       </div>
     );
   }
